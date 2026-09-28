@@ -88,7 +88,7 @@ export default function Footer() {
 
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-cream-soft/50 sm:flex-row">
           <p>&copy; 2026 Nutricionista Fernanda Yaryd. Todos os direitos reservados.</p>
-          <p>Desenvolvido com ❤️ por</p>
+          <p>Desenvolvido por Odysen</p>
         </div>
       </div>
     </footer>

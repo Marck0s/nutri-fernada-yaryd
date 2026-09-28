@@ -3,11 +3,10 @@ import Reveal from "./Reveal";
 import SplitHeading from "./SplitHeading";
 
 const paragraphs = [
-  "Como nutricionista e engenheira de alimentos, com especialização em Saúde da Mulher e Gastronomia Funcional, encontrei na nutrição um propósito que vai muito além da alimentação: ajudar mulheres a recuperarem sua saúde, confiança e qualidade de vida.",
-  "Acredito que saúde não é apenas a ausência de doença. É sentir disposição ao acordar, viver com autonomia, ter equilíbrio e fazer escolhas conscientes que respeitem sua rotina e seu corpo.",
-  "Por isso, cada consulta é única. Meu trabalho é compreender sua história, seus desafios e seus objetivos para construir um plano alimentar personalizado, baseado em evidências científicas e pensado para a sua realidade.",
-  "Seja para emagrecer de forma saudável, atravessar o climatério e a menopausa com mais leveza, reduzir inflamações ou simplesmente desenvolver uma relação mais tranquila com a alimentação, estarei ao seu lado em cada etapa dessa jornada.",
-  "Meu compromisso é oferecer um acompanhamento acolhedor, individualizado e humano, para que você conquiste resultados duradouros e uma vida mais saudável, leve e funcional.",
+  "Sou nutricionista, engenheira de alimentos, com especialização em Nutrição Funcional na Saúde da Mulher, Fitoterapia e Gastronomia Funcional.",
+  "Minha trajetória me trouxe um olhar que vai além do alimento isolado. Busco compreender a mulher de forma integral — sua rotina, sintomas, fase hormonal, relação com a alimentação e tudo aquilo que pode estar impactando sua saúde e qualidade de vida. ",
+  "A Fitoterapia complementa esse cuidado, permitindo, quando indicada, integrar recursos de origem vegetal à estratégia nutricional de forma individualizada e responsável. ",
+  "Acredito que saúde não é apenas ausência de doença. É ter disposição, autonomia, equilíbrio e sentir que o seu corpo funciona a seu favor. ",
 ];
 
 export default function About() {

@@ -42,8 +42,7 @@ export default function Hero() {
 
           <Reveal direction="up" delay={200}>
             <p className="mt-7 max-w-xl text-lg leading-relaxed text-ink-soft">
-              Atendimento humanizado com foco em emagrecimento saudável, saúde da
-              mulher, climatério, menopausa e reeducação alimentar.
+              Um acompanhamento individualizado que integra alimentação, saúde metabólica, fase hormonal, estilo de vida e, quando indicada, Fitoterapia.
             </p>
           </Reveal>
 
@@ -65,10 +64,12 @@ export default function Hero() {
           </Reveal>
 
           <Reveal direction="up" delay={500}>
-            <div className="mt-12 flex items-center gap-6 text-sm text-ink-soft/80">
+            <div className="mt-12 flex flex-wrap items-center gap-2 sm:gap-6 text-sm text-ink-soft/80">
               <span>Nutricionista &amp; Engenheira de Alimentos</span>
               <span className="h-1 w-1 rounded-full bg-sage/60" />
               <span>Saúde da Mulher</span>
+              <span className="h-1 w-1 rounded-full bg-sage/60" />
+              <span>Fitoretapia</span>
             </div>
           </Reveal>
         </div>
@@ -101,7 +102,7 @@ export default function Hero() {
             aria-hidden="true"
           >
             <span className="font-display text-xl italic text-clay">5.0</span>
-            <span className="text-[0.65rem] uppercase tracking-widest text-sage">avaliações</span>
+            <span className="text-[0.65rem] uppercase tracking-widest text-sage">em avaliações</span>
           </div>
         </Reveal>
       </div>

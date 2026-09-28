@@ -8,6 +8,7 @@ const DIFFERENTIALS = [
   "Acompanhamento individualizado",
   "Consultas presenciais e online",
   "Foco em saúde e performance",
+  "Nutrição Funcional e Fitoterapia",
 ];
 
 export default function Differentials() {
