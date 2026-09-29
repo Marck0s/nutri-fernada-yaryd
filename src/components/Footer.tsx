@@ -4,6 +4,7 @@ import {
   InstagramIcon,
   MailIcon,
 } from "./icons";
+import { NEXT_HMR_REFRESH_HASH_COOKIE } from "next/dist/client/components/app-router-headers";
 
 const CONTACTS = [
   {
@@ -67,7 +68,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          
+
           <div>
             <h3 className="font-display text-base text-white">Localização</h3>
             <div className="mt-5 overflow-hidden rounded-2xl border border-white/10">
@@ -88,9 +89,19 @@ export default function Footer() {
 
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-xs text-cream-soft/50 sm:flex-row">
           <p>&copy; 2026 Nutricionista Fernanda Yaryd. Todos os direitos reservados.</p>
-          <p>Desenvolvido por Odysen</p>
+          <p>
+            Desenvolvido por{" "}
+            <a
+              href="https://odysen.com.br/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: "#8b5cf6", textDecoration: "none" }}
+            >
+              Odysen
+            </a>
+          </p>
         </div>
       </div>
-    </footer>
+    </footer >
   )
 }
