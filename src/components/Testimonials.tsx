@@ -1,9 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import Reveal from "./Reveal";
 import SplitHeading from "./SplitHeading";
+import { prefersReducedMotion } from "@/lib/reducedMotion";
+
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+
+function subscribeToReducedMotion(onStoreChange: () => void) {
+  const query = window.matchMedia(REDUCED_MOTION_QUERY);
+  query.addEventListener("change", onStoreChange);
+  return () => query.removeEventListener("change", onStoreChange);
+}
 
 const TESTIMONIALS = [
   {
@@ -65,11 +74,57 @@ const TESTIMONIALS = [
 
 export default function Testimonials() {
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const [rowRevealed, setRowRevealed] = useState(false);
+
+  // `useSyncExternalStore` reads the preference on the client while hydrating
+  // from the server snapshot, so the first paint matches the SSR markup and no
+  // motion preference mismatch reaches the DOM.
+  const reducedMotion = useSyncExternalStore(
+    subscribeToReducedMotion,
+    prefersReducedMotion,
+    () => false
+  );
+
+  // Reduced motion means no entrance at all — the cards render in their final
+  // position, so there is nothing to transition.
+  const cardsRevealed = reducedMotion || rowRevealed;
+
+  // The cards are revealed as one row, never one by one.
+  //
+  // `Reveal` observes each card against the *viewport*, but the carousel clips
+  // every card past its visible width. Those cards therefore never report
+  // `isIntersecting`, so they sat forever at `translateY(28px)` / `opacity: 0`
+  // — invisible, and 28px lower than the cards that *were* in view — until the
+  // user panned the carousel and watched them pop up one by one. Observing the
+  // scroller instead anchors the entrance to the row as a whole and keeps the
+  // per-card stagger.
+  useEffect(() => {
+    if (reducedMotion) return;
+
+    const node = scrollerRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRowRevealed(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0, rootMargin: "0px 0px -12% 0px" }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [reducedMotion]);
 
   const scrollBy = (direction: 1 | -1) => {
     const node = scrollerRef.current;
     if (!node) return;
-    node.scrollBy({ left: direction * (node.clientWidth * 0.85), behavior: "smooth" });
+    node.scrollBy({
+      left: direction * (node.clientWidth * 0.85),
+      behavior: reducedMotion ? "instant" : "smooth",
+    });
   };
 
   return (
@@ -104,18 +159,43 @@ export default function Testimonials() {
         </div>
 
         <div className="relative mt-14">
+          {/* `overflow-y-hidden` is load-bearing, not cosmetic. Because `overflow-x`
+              is not `visible`, `overflow-y` would compute to `auto`, and a
+              transformed descendant (the cards' `translateY(28px)` entrance)
+              extends the scrollable overflow area — which left the carousel
+              user-scrollable by 28px - 16px (the `pb-4`) = 12px *vertically*. The
+              first wheel tick / first swipe over a card was swallowed by the row
+              scrolling itself, so the page refused to move while the whole card row
+              visibly jumped up. `hidden` makes the row non-user-scrollable on Y and
+              hands the gesture straight back to the page.
+              (`clip` would be tidier — it does not create a scroll container at all
+              — but Chrome normalises `overflow-x: auto` + `overflow-y: clip` down to
+              `hidden`, so `hidden` is the value that actually lands.)
+              `touch-action: pan-x pan-y` is then mandatory on touch: a
+              horizontal-only scroller otherwise infers a pan-x touch-action region,
+              which traps vertical swipes before they can chain.
+              `overscroll-x-contain` keeps horizontal over-scroll from chaining.
+              `items-stretch` is the flex default and is stated explicitly because
+              equal card height depends on it together with the `h-full` card below. */}
           <div
             ref={scrollerRef}
-            className="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            tabIndex={0}
+            role="region"
+            aria-label="Depoimentos das pacientes"
+            className="flex snap-x snap-mandatory items-stretch gap-6 overflow-x-auto overflow-y-hidden overscroll-x-contain [touch-action:pan-x_pan-y] scroll-smooth pb-4 [-ms-overflow-style:none] [scrollbar-width:none] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay [&::-webkit-scrollbar]:hidden"
           >
             {TESTIMONIALS.map((t, index) => (
-              <Reveal
+              <div
                 key={t.name}
-                direction="up"
-                delay={index * 80}
+                data-reveal="up"
+                data-revealed={cardsRevealed}
+                style={{
+                  transitionDelay: `${index * 80}ms`,
+                  transition: reducedMotion ? "none" : undefined,
+                }}
                 className="w-[85%] shrink-0 snap-start sm:w-[60%] lg:w-[32%]"
               >
-                <div className="flex h-full flex-col rounded-[1.5rem] bg-white p-7 shadow-card">
+                <div className="flex h-full flex-col rounded-[1.5rem] bg-white p-7 shadow-rest">
                   <div className="flex items-center gap-3">
                     {t.avatar ? (
                       <>
@@ -173,7 +253,7 @@ export default function Testimonials() {
                     &ldquo;{t.text}&rdquo;
                   </p>
                 </div>
-              </Reveal>
+              </div>
             ))}
           </div>
 
@@ -182,7 +262,7 @@ export default function Testimonials() {
               type="button"
               onClick={() => scrollBy(-1)}
               aria-label="Depoimento anterior"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-sage/30 text-ink transition-colors duration-300 hover:border-clay hover:text-clay"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-sage/30 text-ink transition-colors duration-300 hover:border-clay hover:text-clay focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay"
             >
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none">
                 <path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
@@ -192,7 +272,7 @@ export default function Testimonials() {
               type="button"
               onClick={() => scrollBy(1)}
               aria-label="Próximo depoimento"
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-sage/30 text-ink transition-colors duration-300 hover:border-clay hover:text-clay"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-sage/30 text-ink transition-colors duration-300 hover:border-clay hover:text-clay focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-clay"
             >
               <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none">
                 <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />

@@ -98,7 +98,7 @@ export default function Hero() {
             />
           </div>
           <div
-            className="absolute -bottom-6 -left-6 hidden h-28 w-28 rounded-full bg-white shadow-soft sm:flex flex-col items-center justify-center text-center lg:flex"
+            className="absolute -bottom-6 -left-6 hidden h-28 w-28 rounded-full bg-white shadow-float sm:flex flex-col items-center justify-center text-center lg:flex"
             aria-hidden="true"
           >
             <span className="font-display text-xl italic text-clay">5.0</span>

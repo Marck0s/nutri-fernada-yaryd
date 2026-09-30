@@ -39,7 +39,7 @@ export default function CtaSection() {
         </div>
 
         <Reveal direction="scale" delay={150}>
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-xs overflow-hidden rounded-[1.75rem] shadow-soft">
+          <div className="relative mx-auto aspect-[4/5] w-full max-w-xs overflow-hidden rounded-[1.75rem] shadow-float">
             <Image
               src="/images/fernanda-kiwi.jpg"
               alt="Fernanda Yaryd sorrindo, celebrando alimentação com leveza e bom humor"

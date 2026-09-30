@@ -4,7 +4,6 @@ import {
   InstagramIcon,
   MailIcon,
 } from "./icons";
-import { NEXT_HMR_REFRESH_HASH_COOKIE } from "next/dist/client/components/app-router-headers";
 
 const CONTACTS = [
   {
@@ -82,6 +81,7 @@ export default function Footer() {
                 style={{ border: 0 }}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
+                sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
               />
             </div>
           </div>
@@ -95,7 +95,7 @@ export default function Footer() {
               href="https://odysen.com.br/"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: "#8b5cf6", textDecoration: "none" }}
+              className="transition-colors duration-300 hover:text-[#8b5cf6] focus-visible:text-[#8b5cf6]"
             >
               Odysen
             </a>

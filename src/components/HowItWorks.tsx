@@ -44,7 +44,7 @@ export default function HowItWorks() {
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-16 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-20 lg:px-10">
         <Reveal direction="left" className="relative order-2 lg:order-1">
           <div className="relative mx-auto grid max-w-md grid-cols-2 gap-4 lg:max-w-none">
-            <div className="relative aspect-[3/4] translate-y-8 overflow-hidden rounded-[1.5rem] shadow-card">
+            <div className="relative aspect-[3/4] translate-y-8 overflow-hidden rounded-[1.5rem] shadow-float">
               <Image
                 src="/images/fernanda-book-fome.jpg"
                 alt="Fernanda Yaryd lendo sobre reeducação alimentar"
@@ -53,7 +53,7 @@ export default function HowItWorks() {
                 className="object-cover"
               />
             </div>
-            <div className="relative aspect-[3/4] overflow-hidden rounded-[1.5rem] shadow-card">
+            <div className="relative aspect-[3/4] overflow-hidden rounded-[1.5rem] shadow-float">
               <Image
                 src="/images/fernanda-book-menopausa.jpg"
                 alt="Fernanda Yaryd com material de estudo sobre menopausa"

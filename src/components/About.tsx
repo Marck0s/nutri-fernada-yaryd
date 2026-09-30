@@ -15,7 +15,7 @@ export default function About() {
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-16 px-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20 lg:px-10">
         <Reveal direction="left" className="relative">
           <div className="relative mx-auto max-w-sm lg:max-w-none">
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[1.75rem] shadow-soft">
+            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[1.75rem] shadow-float">
               <Image
                 src="/images/fernanda-portrait-close.jpg"
                 alt="Fernanda Yaryd, nutricionista especialista em saúde da mulher"
@@ -24,7 +24,7 @@ export default function About() {
                 className="object-cover"
               />
             </div>
-            <div className="absolute -bottom-10 -right-8 hidden w-44 overflow-hidden rounded-[1.25rem] border-4 border-cream-soft shadow-card sm:block">
+            <div className="absolute -bottom-10 -right-8 hidden w-44 overflow-hidden rounded-[1.25rem] border-4 border-cream-soft shadow-float sm:block">
               <Image
                 src="/images/fernanda-desk.jpg"
                 alt="Fernanda Yaryd em atendimento, planejando consultas nutricionais"

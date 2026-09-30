@@ -75,7 +75,7 @@ export default function Services() {
                 delay={index * 90}
                 className={index === 4 ? "sm:col-span-2 lg:col-span-1" : ""}
               >
-                <div className="group h-full rounded-[1.5rem] bg-white p-8 shadow-card transition-all duration-400 hover:-translate-y-1.5 hover:shadow-soft">
+                <div className="group h-full rounded-[1.5rem] bg-white p-8 shadow-rest transition-all duration-400 hover:-translate-y-1.5 hover:shadow-hover">
                   <div className="flex h-14 w-14 items-center justify-center rounded-full bg-cream text-clay transition-colors duration-400 group-hover:bg-clay group-hover:text-white">
                     <Icon className="h-7 w-7" />
                   </div>
